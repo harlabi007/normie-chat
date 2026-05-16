@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from "react"
 
-const ANTHROPIC_KEY = "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"
-
 function App() {
   const [normieId, setNormieId] = useState("")
   const [normie, setNormie] = useState(null)
@@ -63,7 +61,7 @@ function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": ANTHROPIC_KEY,
+          "x-api-key": import.meta.env.VITE_ANTHROPIC_KEY,
           "anthropic-version": "2023-06-01",
           "anthropic-dangerous-direct-browser-access": "true"
         },
