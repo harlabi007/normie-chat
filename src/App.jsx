@@ -86,30 +86,33 @@ function App() {
 
   if (loading) return (
     <div style={{ backgroundColor: "#07070e", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ color: "#a3ff47", fontFamily: "monospace", fontSize: "20px" }}>Loading Normie #{normieId}...</p>
+      <p style={{ color: "#a3ff47", fontFamily: "monospace", fontSize: "18px", textAlign: "center", padding: "0 1rem" }}>Loading Normie #{normieId}...</p>
     </div>
   )
 
   if (normie) return (
-    <div style={{ backgroundColor: "#07070e", minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "monospace", maxWidth: "700px", margin: "0 auto" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "16px", borderBottom: "1px solid #181830" }}>
-        <img src={normie.imgUrl} alt={normie.name} style={{ width: "48px", height: "48px", imageRendering: "pixelated", borderRadius: "6px" }} />
-        <div>
-          <h2 style={{ color: "#a3ff47", margin: 0, fontSize: "16px" }}>{normie.name}</h2>
-          <p style={{ color: "#5a5a7a", margin: 0, fontSize: "12px" }}>on-chain AI agent</p>
+    <div style={{ backgroundColor: "#07070e", height: "100dvh", display: "flex", flexDirection: "column", fontFamily: "monospace" }}>
+
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "12px 16px", borderBottom: "1px solid #181830", background: "#0d0d1a", flexShrink: 0 }}>
+        <img src={normie.imgUrl} alt={normie.name} style={{ width: "40px", height: "40px", imageRendering: "pixelated", borderRadius: "6px", flexShrink: 0 }} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h2 style={{ color: "#a3ff47", margin: 0, fontSize: "14px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{normie.name}</h2>
+          <p style={{ color: "#5a5a7a", margin: 0, fontSize: "11px" }}>on-chain AI agent</p>
         </div>
-        <button onClick={() => { setNormie(null); setMessages([]) }} style={{ marginLeft: "auto", background: "transparent", color: "#5a5a7a", border: "1px solid #252548", borderRadius: "6px", padding: "8px 14px", cursor: "pointer" }}>← Back</button>
+        <button onClick={() => { setNormie(null); setMessages([]) }} style={{ background: "transparent", color: "#5a5a7a", border: "1px solid #252548", borderRadius: "6px", padding: "6px 12px", cursor: "pointer", fontFamily: "monospace", fontSize: "11px", flexShrink: 0 }}>← Back</button>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", padding: "20px 16px", display: "flex", flexDirection: "column", gap: "12px" }}>
+      {/* Messages */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: "10px" }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: "flex", justifyContent: m.role === "user" ? "flex-end" : "flex-start" }}>
             <div style={{
-              maxWidth: "75%", padding: "12px 16px", borderRadius: "12px",
+              maxWidth: "80%", padding: "10px 14px", borderRadius: "12px",
               background: m.role === "user" ? "#1a3a0a" : "#0d0d1a",
               border: `1px solid ${m.role === "user" ? "#2d5a10" : "#181830"}`,
               color: m.role === "user" ? "#a3ff47" : "#c0c0d4",
-              fontSize: "14px", lineHeight: "1.6"
+              fontSize: "14px", lineHeight: "1.6", wordBreak: "break-word"
             }}>
               {m.content}
             </div>
@@ -117,7 +120,7 @@ function App() {
         ))}
         {thinking && (
           <div style={{ display: "flex" }}>
-            <div style={{ padding: "12px 16px", background: "#0d0d1a", border: "1px solid #181830", borderRadius: "12px", color: "#5a5a7a", fontSize: "14px" }}>
+            <div style={{ padding: "10px 14px", background: "#0d0d1a", border: "1px solid #181830", borderRadius: "12px", color: "#5a5a7a", fontSize: "14px" }}>
               typing...
             </div>
           </div>
@@ -125,17 +128,18 @@ function App() {
         <div ref={bottomRef} />
       </div>
 
-      <div style={{ display: "flex", gap: "10px", padding: "16px", borderTop: "1px solid #181830" }}>
+      {/* Input */}
+      <div style={{ display: "flex", gap: "8px", padding: "12px 16px", borderTop: "1px solid #181830", background: "#0d0d1a", flexShrink: 0 }}>
         <input
           value={draft}
           onChange={e => setDraft(e.target.value)}
           onKeyDown={e => e.key === "Enter" && handleSend()}
           placeholder={`Message ${normie.name}...`}
-          style={{ flex: 1, padding: "12px 14px", background: "#0d0d1a", border: "1px solid #252548", borderRadius: "6px", color: "white", fontSize: "14px" }}
+          style={{ flex: 1, padding: "10px 12px", background: "#07070e", border: "1px solid #252548", borderRadius: "6px", color: "white", fontSize: "14px", minWidth: 0 }}
         />
         <button onClick={handleSend} disabled={thinking || !draft.trim()} style={{
-          padding: "12px 20px", background: thinking ? "#2d5a10" : "#a3ff47",
-          color: "#000", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: "bold"
+          padding: "10px 16px", background: thinking ? "#2d5a10" : "#a3ff47",
+          color: "#000", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: "bold", flexShrink: 0, fontSize: "13px"
         }}>
           SEND
         </button>
@@ -143,22 +147,28 @@ function App() {
     </div>
   )
 
+  // HOME
   return (
-    <div style={{ backgroundColor: "#07070e", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "monospace" }}>
-      <h1 style={{ color: "#a3ff47", fontSize: "48px", marginBottom: "8px" }}>NORMIE CHAT</h1>
-      <p style={{ color: "#5a5a7a", marginBottom: "32px" }}>Talk to any of the 10,000 on-chain Normies</p>
-      <input
-        type="number"
-        placeholder="Enter Normie ID (0 - 9999)"
-        value={normieId}
-        onChange={e => setNormieId(e.target.value)}
-        onKeyDown={e => e.key === "Enter" && handleConnect()}
-        style={{ padding: "12px 16px", fontSize: "16px", borderRadius: "6px", border: "1px solid #252548", background: "#0d0d1a", color: "white", width: "300px", marginBottom: "12px" }}
-      />
-      {error && <p style={{ color: "#ff6b4a", marginBottom: "12px" }}>{error}</p>}
-      <div style={{ display: "flex", gap: "12px" }}>
-        <button onClick={handleConnect} style={{ padding: "12px 24px", background: "#a3ff47", color: "#000", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: "bold" }}>CONNECT</button>
-        <button onClick={handleRandom} style={{ padding: "12px 24px", background: "transparent", color: "white", border: "1px solid #252548", borderRadius: "6px", cursor: "pointer" }}>RANDOM</button>
+    <div style={{ backgroundColor: "#07070e", minHeight: "100dvh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "monospace", padding: "1.5rem" }}>
+      <div style={{ width: "100%", maxWidth: "420px", textAlign: "center" }}>
+        <h1 style={{ color: "#a3ff47", fontSize: "clamp(28px, 8vw, 48px)", marginBottom: "8px" }}>NORMIE CHAT</h1>
+        <p style={{ color: "#5a5a7a", marginBottom: "32px", fontSize: "13px", lineHeight: 1.6 }}>Talk to any of the 10,000 on-chain Normies</p>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center" }}>
+          <input
+            type="number"
+            placeholder="Enter Normie ID (0 - 9999)"
+            value={normieId}
+            onChange={e => setNormieId(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleConnect()}
+            style={{ padding: "12px 16px", fontSize: "15px", borderRadius: "6px", border: "1px solid #252548", background: "#0d0d1a", color: "white", width: "100%", maxWidth: "300px" }}
+          />
+          {error && <p style={{ color: "#ff6b4a", fontSize: "12px", margin: 0 }}>{error}</p>}
+          <div style={{ display: "flex", gap: "10px", width: "100%", maxWidth: "300px" }}>
+            <button onClick={handleConnect} style={{ flex: 1, padding: "12px", background: "#a3ff47", color: "#000", border: "none", borderRadius: "6px", cursor: "pointer", fontWeight: "bold", fontFamily: "monospace", fontSize: "13px" }}>CONNECT</button>
+            <button onClick={handleRandom} style={{ flex: 1, padding: "12px", background: "transparent", color: "white", border: "1px solid #252548", borderRadius: "6px", cursor: "pointer", fontFamily: "monospace", fontSize: "13px" }}>RANDOM</button>
+          </div>
+        </div>
       </div>
     </div>
   )
